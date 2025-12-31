@@ -15,37 +15,85 @@ const services = [
     icon: "Refrigerator",
     title: "Ремонт холодильников",
     description: "Диагностика и устранение неисправностей любой сложности",
-    price: "от 1500 ₽"
+    price: "от 1500 ₽",
+    category: "Бытовая техника"
   },
   {
     icon: "Waves",
     title: "Ремонт стиральных машин",
     description: "Замена подшипников, насосов, электроники",
-    price: "от 1800 ₽"
+    price: "от 1800 ₽",
+    category: "Бытовая техника"
   },
   {
     icon: "Wind",
     title: "Ремонт посудомоечных машин",
     description: "Устранение протечек, замена датчиков",
-    price: "от 1600 ₽"
+    price: "от 1600 ₽",
+    category: "Бытовая техника"
   },
   {
     icon: "Microwave",
     title: "Ремонт микроволновок",
     description: "Замена магнетрона, ремонт электроники",
-    price: "от 1200 ₽"
+    price: "от 1200 ₽",
+    category: "Бытовая техника"
   },
   {
     icon: "AirVent",
     title: "Ремонт кондиционеров",
     description: "Заправка фреоном, чистка, диагностика",
-    price: "от 2000 ₽"
+    price: "от 2000 ₽",
+    category: "Бытовая техника"
   },
   {
     icon: "Flame",
     title: "Ремонт плит и духовок",
     description: "Газовые и электрические, любой сложности",
-    price: "от 1400 ₽"
+    price: "от 1400 ₽",
+    category: "Бытовая техника"
+  },
+  {
+    icon: "Droplet",
+    title: "Замена смесителей",
+    description: "Установка и замена смесителей на кухне и в ванной",
+    price: "от 800 ₽",
+    category: "Сантехника"
+  },
+  {
+    icon: "Droplets",
+    title: "Устранение протечек",
+    description: "Ремонт труб, устранение течей, замена прокладок",
+    price: "от 1000 ₽",
+    category: "Сантехника"
+  },
+  {
+    icon: "Bath",
+    title: "Установка ванн и унитазов",
+    description: "Монтаж и подключение сантехники под ключ",
+    price: "от 2500 ₽",
+    category: "Сантехника"
+  },
+  {
+    icon: "PipetteIcon",
+    title: "Прочистка канализации",
+    description: "Устранение засоров любой сложности",
+    price: "от 1200 ₽",
+    category: "Сантехника"
+  },
+  {
+    icon: "Gauge",
+    title: "Установка счетчиков воды",
+    description: "Монтаж, замена, опломбировка счетчиков",
+    price: "от 1500 ₽",
+    category: "Сантехника"
+  },
+  {
+    icon: "Shower",
+    title: "Установка душевых кабин",
+    description: "Монтаж и подключение душевых систем",
+    price: "от 3000 ₽",
+    category: "Сантехника"
   }
 ];
 
@@ -187,12 +235,12 @@ export default function Index() {
                   </div>
                   
                   <div className="grid gap-2">
-                    <Label htmlFor="service">Тип техники</Label>
+                    <Label htmlFor="service">Тип работы</Label>
                     <Input
                       id="service"
                       value={formData.service}
                       onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                      placeholder="Холодильник, стиральная машина..."
+                      placeholder="Холодильник, замена смесителя..."
                     />
                   </div>
                   
@@ -222,15 +270,21 @@ export default function Index() {
         <div className="container relative">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
-              <Badge variant="outline" className="w-fit">
-                <Icon name="Award" size={14} className="mr-1" />
-                Опыт работы 12+ лет
-              </Badge>
+              <div className="flex flex-wrap gap-2">
+                <Badge variant="outline" className="w-fit">
+                  <Icon name="Award" size={14} className="mr-1" />
+                  Опыт работы 12+ лет
+                </Badge>
+                <Badge variant="outline" className="w-fit bg-primary/10">
+                  <Icon name="Wrench" size={14} className="mr-1" />
+                  Сантехник 5-го разряда
+                </Badge>
+              </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
-                Профессиональный ремонт бытовой техники
+                Ремонт бытовой техники и сантехнические работы
               </h1>
               <p className="text-lg text-muted-foreground">
-                Быстрая диагностика и качественный ремонт любой сложности. Гарантия на все виды работ. Выезд мастера в день обращения.
+                Дипломированный специалист. Быстрая диагностика и качественный ремонт любой сложности. Гарантия на все виды работ. Выезд мастера в день обращения.
               </p>
               <div className="flex flex-wrap gap-4">
                 <Dialog open={isBookingOpen} onOpenChange={setIsBookingOpen}>
@@ -276,8 +330,8 @@ export default function Index() {
           <div className="max-w-3xl mx-auto text-center space-y-4">
             <h2 className="text-3xl md:text-4xl font-bold">О мастере</h2>
             <p className="text-lg text-muted-foreground">
-              Меня зовут Алексей Морозов. Я профессионально занимаюсь ремонтом бытовой техники более 12 лет. 
-              За это время успешно восстановил работоспособность более 2500 единиц техники различных брендов.
+              Меня зовут Алексей Морозов. Я дипломированный сантехник 5-го разряда и мастер по ремонту бытовой техники с опытом работы более 12 лет. 
+              За это время выполнил более 2500 ремонтов техники и сантехнических работ различной сложности.
             </p>
           </div>
           
@@ -338,28 +392,62 @@ export default function Index() {
           <div className="text-center space-y-4 mb-12">
             <h2 className="text-3xl md:text-4xl font-bold">Услуги</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Ремонтирую все виды бытовой техники с выездом на дом
+              Ремонт бытовой техники и полный спектр сантехнических работ
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {services.map((service, index) => (
-              <Card key={index} className="hover:shadow-lg transition-shadow">
-                <CardHeader>
-                  <Icon name={service.icon} size={40} className="text-primary mb-3" />
-                  <CardTitle>{service.title}</CardTitle>
-                  <CardDescription>{service.description}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex items-center justify-between">
-                    <span className="text-2xl font-bold text-primary">{service.price}</span>
-                    <Button variant="outline" size="sm" onClick={() => setIsBookingOpen(true)}>
-                      Заказать
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+          <div className="space-y-8">
+            <div>
+              <h3 className="text-2xl font-semibold mb-6 flex items-center gap-2">
+                <Icon name="Zap" size={24} className="text-primary" />
+                Ремонт бытовой техники
+              </h3>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {services.filter(s => s.category === "Бытовая техника").map((service, index) => (
+                  <Card key={index} className="hover:shadow-lg transition-shadow">
+                    <CardHeader>
+                      <Icon name={service.icon} size={40} className="text-primary mb-3" />
+                      <CardTitle>{service.title}</CardTitle>
+                      <CardDescription>{service.description}</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="flex items-center justify-between">
+                        <span className="text-2xl font-bold text-primary">{service.price}</span>
+                        <Button variant="outline" size="sm" onClick={() => setIsBookingOpen(true)}>
+                          Заказать
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <h3 className="text-2xl font-semibold mb-6 flex items-center gap-2">
+                <Icon name="Droplet" size={24} className="text-primary" />
+                Сантехнические работы
+              </h3>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {services.filter(s => s.category === "Сантехника").map((service, index) => (
+                  <Card key={index} className="hover:shadow-lg transition-shadow">
+                    <CardHeader>
+                      <Icon name={service.icon} size={40} className="text-primary mb-3" />
+                      <CardTitle>{service.title}</CardTitle>
+                      <CardDescription>{service.description}</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="flex items-center justify-between">
+                        <span className="text-2xl font-bold text-primary">{service.price}</span>
+                        <Button variant="outline" size="sm" onClick={() => setIsBookingOpen(true)}>
+                          Заказать
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
