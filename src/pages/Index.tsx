@@ -4,7 +4,8 @@ import Icon from "@/components/ui/icon";
 import HeroSection from "@/components/sections/HeroSection";
 import BookingDialog from "@/components/sections/BookingDialog";
 import ServicesSection from "@/components/sections/ServicesSection";
-import AboutSection from "@/components/sections/AboutSection";
+import AboutPortfolioReviews from "@/components/sections/AboutPortfolioReviews";
+import ContactSection from "@/components/sections/ContactSection";
 
 export default function Index() {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
@@ -47,9 +48,11 @@ export default function Index() {
 
       <HeroSection onBookingClick={() => setIsBookingOpen(true)} />
       
-      <AboutSection />
+      <AboutPortfolioReviews />
       
       <ServicesSection onBookingClick={() => setIsBookingOpen(true)} />
+
+      <ContactSection />
 
       <footer className="border-t py-8">
         <div className="container">

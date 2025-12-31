@@ -7,11 +7,18 @@ interface HeroSectionProps {
 }
 
 export default function HeroSection({ onBookingClick }: HeroSectionProps) {
+  const scrollToServices = () => {
+    const element = document.getElementById("services");
+    element?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
-    <section className="py-20 md:py-32">
-      <div className="container">
+    <section className="relative py-20 md:py-32 overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-accent/5" />
+      
+      <div className="container relative">
         <div className="max-w-3xl mx-auto text-center space-y-8">
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2 justify-center">
             <Badge variant="outline" className="w-fit">
               <Icon name="Award" size={14} className="mr-1" />
               Опыт работы 12+ лет
@@ -29,16 +36,36 @@ export default function HeroSection({ onBookingClick }: HeroSectionProps) {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-accent hover:bg-accent/90" onClick={onBookingClick}>
+            <Button 
+              size="lg" 
+              className="bg-accent hover:bg-accent/90"
+              onClick={onBookingClick}
+            >
               <Icon name="Calendar" size={20} className="mr-2" />
               Записаться на ремонт
             </Button>
-            <Button size="lg" variant="outline" asChild>
-              <a href="tel:+79991234567">
-                <Icon name="Phone" size={20} className="mr-2" />
-                Позвонить сейчас
-              </a>
+            <Button 
+              size="lg" 
+              variant="outline"
+              onClick={scrollToServices}
+            >
+              Посмотреть услуги
             </Button>
+          </div>
+
+          <div className="grid grid-cols-3 gap-8 pt-8 border-t">
+            <div className="text-center">
+              <div className="text-3xl font-bold text-primary">12+</div>
+              <div className="text-sm text-muted-foreground">Лет опыта</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold text-primary">2500+</div>
+              <div className="text-sm text-muted-foreground">Довольных клиентов</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold text-primary">98%</div>
+              <div className="text-sm text-muted-foreground">Ремонт с первого раза</div>
+            </div>
           </div>
         </div>
       </div>
