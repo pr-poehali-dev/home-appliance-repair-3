@@ -1,160 +1,13 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Calendar } from "@/components/ui/calendar";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Badge } from "@/components/ui/badge";
 import Icon from "@/components/ui/icon";
-import { toast } from "sonner";
-
-const services = [
-  {
-    icon: "Refrigerator",
-    title: "Ремонт холодильников",
-    description: "Диагностика и устранение неисправностей любой сложности",
-    price: "от 1500 ₽",
-    category: "Бытовая техника"
-  },
-  {
-    icon: "Waves",
-    title: "Ремонт стиральных машин",
-    description: "Замена подшипников, насосов, электроники",
-    price: "от 1800 ₽",
-    category: "Бытовая техника"
-  },
-  {
-    icon: "Wind",
-    title: "Ремонт посудомоечных машин",
-    description: "Устранение протечек, замена датчиков",
-    price: "от 1600 ₽",
-    category: "Бытовая техника"
-  },
-  {
-    icon: "Microwave",
-    title: "Ремонт микроволновок",
-    description: "Замена магнетрона, ремонт электроники",
-    price: "от 1200 ₽",
-    category: "Бытовая техника"
-  },
-  {
-    icon: "AirVent",
-    title: "Ремонт кондиционеров",
-    description: "Заправка фреоном, чистка, диагностика",
-    price: "от 2000 ₽",
-    category: "Бытовая техника"
-  },
-  {
-    icon: "Flame",
-    title: "Ремонт плит и духовок",
-    description: "Газовые и электрические, любой сложности",
-    price: "от 1400 ₽",
-    category: "Бытовая техника"
-  },
-  {
-    icon: "Droplet",
-    title: "Замена смесителей",
-    description: "Установка и замена смесителей на кухне и в ванной",
-    price: "от 800 ₽",
-    category: "Сантехника"
-  },
-  {
-    icon: "Droplets",
-    title: "Устранение протечек",
-    description: "Ремонт труб, устранение течей, замена прокладок",
-    price: "от 1000 ₽",
-    category: "Сантехника"
-  },
-  {
-    icon: "Bath",
-    title: "Установка ванн и унитазов",
-    description: "Монтаж и подключение сантехники под ключ",
-    price: "от 2500 ₽",
-    category: "Сантехника"
-  },
-  {
-    icon: "PipetteIcon",
-    title: "Прочистка канализации",
-    description: "Устранение засоров любой сложности",
-    price: "от 1200 ₽",
-    category: "Сантехника"
-  },
-  {
-    icon: "Gauge",
-    title: "Установка счетчиков воды",
-    description: "Монтаж, замена, опломбировка счетчиков",
-    price: "от 1500 ₽",
-    category: "Сантехника"
-  },
-  {
-    icon: "Shower",
-    title: "Установка душевых кабин",
-    description: "Монтаж и подключение душевых систем",
-    price: "от 3000 ₽",
-    category: "Сантехника"
-  }
-];
-
-const portfolio = [
-  {
-    image: "https://cdn.poehali.dev/projects/94e8656a-f286-43b1-886e-74999cc9b5f2/files/3927b535-bd08-4986-bb5a-1c76dcd4f0e1.jpg",
-    title: "Ремонт стиральной машины Bosch",
-    description: "Замена подшипников и сальника"
-  },
-  {
-    image: "https://cdn.poehali.dev/projects/94e8656a-f286-43b1-886e-74999cc9b5f2/files/42d397a8-76f0-4469-aab0-2e6ed72e3c96.jpg",
-    title: "Диагностика холодильника Samsung",
-    description: "Устранение утечки фреона"
-  },
-  {
-    image: "https://cdn.poehali.dev/projects/94e8656a-f286-43b1-886e-74999cc9b5f2/files/3927b535-bd08-4986-bb5a-1c76dcd4f0e1.jpg",
-    title: "Ремонт посудомоечной машины",
-    description: "Замена циркуляционного насоса"
-  }
-];
-
-const reviews = [
-  {
-    name: "Анна Петрова",
-    rating: 5,
-    text: "Быстро и качественно отремонтировали холодильник. Мастер приехал в тот же день, всё объяснил. Рекомендую!",
-    date: "15 декабря 2024"
-  },
-  {
-    name: "Михаил Соколов",
-    rating: 5,
-    text: "Профессиональный подход к делу. Стиральная машина работает как новая. Цены адекватные.",
-    date: "10 декабря 2024"
-  },
-  {
-    name: "Елена Иванова",
-    rating: 5,
-    text: "Отличный сервис! Мастер нашёл проблему за 10 минут и сразу устранил. Спасибо!",
-    date: "5 декабря 2024"
-  }
-];
+import HeroSection from "@/components/sections/HeroSection";
+import BookingDialog from "@/components/sections/BookingDialog";
+import ServicesSection from "@/components/sections/ServicesSection";
+import AboutSection from "@/components/sections/AboutSection";
 
 export default function Index() {
-  const [date, setDate] = useState<Date | undefined>(new Date());
   const [isBookingOpen, setIsBookingOpen] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    phone: "",
-    service: "",
-    message: ""
-  });
-
-  const handleBooking = () => {
-    if (!formData.name || !formData.phone) {
-      toast.error("Заполните обязательные поля");
-      return;
-    }
-    toast.success("Заявка отправлена! Мастер свяжется с вами в ближайшее время.");
-    setIsBookingOpen(false);
-    setFormData({ name: "", phone: "", service: "", message: "" });
-  };
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -188,401 +41,45 @@ export default function Index() {
             </button>
           </nav>
 
-          <Dialog open={isBookingOpen} onOpenChange={setIsBookingOpen}>
-            <DialogTrigger asChild>
-              <Button className="bg-accent hover:bg-accent/90">
-                <Icon name="Calendar" size={18} className="mr-2" />
-                Записаться
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-[600px]">
-              <DialogHeader>
-                <DialogTitle>Запись на ремонт</DialogTitle>
-                <DialogDescription>
-                  Выберите удобную дату и заполните форму. Мастер свяжется с вами для подтверждения.
-                </DialogDescription>
-              </DialogHeader>
-              
-              <div className="grid gap-6 py-4">
-                <div className="flex justify-center">
-                  <Calendar
-                    mode="single"
-                    selected={date}
-                    onSelect={setDate}
-                    className="rounded-md border"
-                  />
-                </div>
-                
-                <div className="grid gap-4">
-                  <div className="grid gap-2">
-                    <Label htmlFor="name">Ваше имя *</Label>
-                    <Input
-                      id="name"
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      placeholder="Иван Иванов"
-                    />
-                  </div>
-                  
-                  <div className="grid gap-2">
-                    <Label htmlFor="phone">Телефон *</Label>
-                    <Input
-                      id="phone"
-                      value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      placeholder="+7 (999) 123-45-67"
-                    />
-                  </div>
-                  
-                  <div className="grid gap-2">
-                    <Label htmlFor="service">Тип работы</Label>
-                    <Input
-                      id="service"
-                      value={formData.service}
-                      onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                      placeholder="Холодильник, замена смесителя..."
-                    />
-                  </div>
-                  
-                  <div className="grid gap-2">
-                    <Label htmlFor="message">Описание проблемы</Label>
-                    <Textarea
-                      id="message"
-                      value={formData.message}
-                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      placeholder="Опишите неисправность..."
-                      rows={3}
-                    />
-                  </div>
-                </div>
-              </div>
-              
-              <Button onClick={handleBooking} className="w-full bg-accent hover:bg-accent/90">
-                Отправить заявку
-              </Button>
-            </DialogContent>
-          </Dialog>
+          <BookingDialog open={isBookingOpen} onOpenChange={setIsBookingOpen} />
         </div>
       </header>
 
-      <section className="relative py-20 md:py-32 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-accent/5" />
-        <div className="container relative">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
-              <div className="flex flex-wrap gap-2">
-                <Badge variant="outline" className="w-fit">
-                  <Icon name="Award" size={14} className="mr-1" />
-                  Опыт работы 12+ лет
-                </Badge>
-                <Badge variant="outline" className="w-fit bg-primary/10">
-                  <Icon name="Wrench" size={14} className="mr-1" />
-                  Сантехник 5-го разряда
-                </Badge>
-              </div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
-                Ремонт бытовой техники и сантехнические работы
-              </h1>
-              <p className="text-lg text-muted-foreground">
-                Дипломированный специалист. Быстрая диагностика и качественный ремонт любой сложности. Гарантия на все виды работ. Выезд мастера в день обращения.
-              </p>
-              <div className="flex flex-wrap gap-4">
-                <Dialog open={isBookingOpen} onOpenChange={setIsBookingOpen}>
-                  <DialogTrigger asChild>
-                    <Button size="lg" className="bg-accent hover:bg-accent/90">
-                      <Icon name="Calendar" size={20} className="mr-2" />
-                      Записаться на ремонт
-                    </Button>
-                  </DialogTrigger>
-                </Dialog>
-                <Button size="lg" variant="outline" onClick={() => scrollToSection("services")}>
-                  Наши услуги
-                </Button>
-              </div>
-              <div className="flex gap-8 pt-4">
-                <div>
-                  <div className="text-3xl font-bold text-primary">2500+</div>
-                  <div className="text-sm text-muted-foreground">Довольных клиентов</div>
-                </div>
-                <div>
-                  <div className="text-3xl font-bold text-primary">12 лет</div>
-                  <div className="text-sm text-muted-foreground">На рынке</div>
-                </div>
-                <div>
-                  <div className="text-3xl font-bold text-primary">100%</div>
-                  <div className="text-sm text-muted-foreground">Гарантия качества</div>
-                </div>
-              </div>
-            </div>
-            <div className="relative">
-              <img
-                src="https://cdn.poehali.dev/projects/94e8656a-f286-43b1-886e-74999cc9b5f2/files/3927b535-bd08-4986-bb5a-1c76dcd4f0e1.jpg"
-                alt="Мастер за работой"
-                className="rounded-2xl shadow-2xl"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="about" className="py-20 bg-muted/50">
-        <div className="container">
-          <div className="max-w-3xl mx-auto text-center space-y-4">
-            <h2 className="text-3xl md:text-4xl font-bold">О мастере</h2>
-            <p className="text-lg text-muted-foreground">
-              Меня зовут Алексей Морозов. Я дипломированный сантехник 5-го разряда и мастер по ремонту бытовой техники с опытом работы более 12 лет. 
-              За это время выполнил более 2500 ремонтов техники и сантехнических работ различной сложности.
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
-            <Card>
-              <CardHeader>
-                <Icon name="GraduationCap" size={32} className="text-primary mb-2" />
-                <CardTitle>Сертифицированный специалист</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground">
-                  Официальные сертификаты от ведущих производителей техники
-                </p>
-              </CardContent>
-            </Card>
-            
-            <Card>
-              <CardHeader>
-                <Icon name="Clock" size={32} className="text-primary mb-2" />
-                <CardTitle>Быстрый выезд</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground">
-                  Приеду в день обращения. Работаю без выходных с 8:00 до 21:00
-                </p>
-              </CardContent>
-            </Card>
-            
-            <Card>
-              <CardHeader>
-                <Icon name="ShieldCheck" size={32} className="text-primary mb-2" />
-                <CardTitle>Гарантия качества</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground">
-                  Гарантия на все виды работ от 3 до 12 месяцев
-                </p>
-              </CardContent>
-            </Card>
-            
-            <Card>
-              <CardHeader>
-                <Icon name="Wrench" size={32} className="text-primary mb-2" />
-                <CardTitle>Оригинальные запчасти</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground">
-                  Использую только качественные комплектующие от производителей
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      <section id="services" className="py-20">
-        <div className="container">
-          <div className="text-center space-y-4 mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold">Услуги</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Ремонт бытовой техники и полный спектр сантехнических работ
-            </p>
-          </div>
-          
-          <div className="space-y-8">
-            <div>
-              <h3 className="text-2xl font-semibold mb-6 flex items-center gap-2">
-                <Icon name="Zap" size={24} className="text-primary" />
-                Ремонт бытовой техники
-              </h3>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {services.filter(s => s.category === "Бытовая техника").map((service, index) => (
-                  <Card key={index} className="hover:shadow-lg transition-shadow">
-                    <CardHeader>
-                      <Icon name={service.icon} size={40} className="text-primary mb-3" />
-                      <CardTitle>{service.title}</CardTitle>
-                      <CardDescription>{service.description}</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="flex items-center justify-between">
-                        <span className="text-2xl font-bold text-primary">{service.price}</span>
-                        <Button variant="outline" size="sm" onClick={() => setIsBookingOpen(true)}>
-                          Заказать
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <h3 className="text-2xl font-semibold mb-6 flex items-center gap-2">
-                <Icon name="Droplet" size={24} className="text-primary" />
-                Сантехнические работы
-              </h3>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {services.filter(s => s.category === "Сантехника").map((service, index) => (
-                  <Card key={index} className="hover:shadow-lg transition-shadow">
-                    <CardHeader>
-                      <Icon name={service.icon} size={40} className="text-primary mb-3" />
-                      <CardTitle>{service.title}</CardTitle>
-                      <CardDescription>{service.description}</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="flex items-center justify-between">
-                        <span className="text-2xl font-bold text-primary">{service.price}</span>
-                        <Button variant="outline" size="sm" onClick={() => setIsBookingOpen(true)}>
-                          Заказать
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="portfolio" className="py-20 bg-muted/50">
-        <div className="container">
-          <div className="text-center space-y-4 mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold">Портфолио</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Примеры выполненных работ
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            {portfolio.map((item, index) => (
-              <Card key={index} className="overflow-hidden hover:shadow-lg transition-shadow">
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="w-full h-48 object-cover"
-                />
-                <CardHeader>
-                  <CardTitle className="text-xl">{item.title}</CardTitle>
-                  <CardDescription>{item.description}</CardDescription>
-                </CardHeader>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="reviews" className="py-20">
-        <div className="container">
-          <div className="text-center space-y-4 mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold">Отзывы клиентов</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Что говорят о моей работе
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-3 gap-6">
-            {reviews.map((review, index) => (
-              <Card key={index}>
-                <CardHeader>
-                  <div className="flex items-center gap-2 mb-2">
-                    {[...Array(review.rating)].map((_, i) => (
-                      <Icon key={i} name="Star" size={16} className="text-yellow-500 fill-yellow-500" />
-                    ))}
-                  </div>
-                  <CardTitle className="text-lg">{review.name}</CardTitle>
-                  <CardDescription className="text-xs">{review.date}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground">{review.text}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="contact" className="py-20 bg-muted/50">
-        <div className="container">
-          <div className="max-w-2xl mx-auto">
-            <div className="text-center space-y-4 mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold">Контакты</h2>
-              <p className="text-lg text-muted-foreground">
-                Свяжитесь со мной удобным способом
-              </p>
-            </div>
-            
-            <Card>
-              <CardContent className="pt-6">
-                <div className="space-y-6">
-                  <div className="flex items-start gap-4">
-                    <Icon name="Phone" size={24} className="text-primary mt-1" />
-                    <div>
-                      <div className="font-semibold">Телефон</div>
-                      <a href="tel:+79991234567" className="text-muted-foreground hover:text-primary">
-                        +7 (999) 123-45-67
-                      </a>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start gap-4">
-                    <Icon name="Mail" size={24} className="text-primary mt-1" />
-                    <div>
-                      <div className="font-semibold">Email</div>
-                      <a href="mailto:master@remont.ru" className="text-muted-foreground hover:text-primary">
-                        master@remont.ru
-                      </a>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start gap-4">
-                    <Icon name="MapPin" size={24} className="text-primary mt-1" />
-                    <div>
-                      <div className="font-semibold">Район работы</div>
-                      <p className="text-muted-foreground">
-                        Москва и Московская область
-                      </p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start gap-4">
-                    <Icon name="Clock" size={24} className="text-primary mt-1" />
-                    <div>
-                      <div className="font-semibold">Режим работы</div>
-                      <p className="text-muted-foreground">
-                        Ежедневно с 8:00 до 21:00
-                      </p>
-                    </div>
-                  </div>
-                  
-                  <Button onClick={() => setIsBookingOpen(true)} className="w-full bg-accent hover:bg-accent/90" size="lg">
-                    <Icon name="Calendar" size={20} className="mr-2" />
-                    Записаться на ремонт
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
+      <HeroSection onBookingClick={() => setIsBookingOpen(true)} />
+      
+      <AboutSection />
+      
+      <ServicesSection onBookingClick={() => setIsBookingOpen(true)} />
 
       <footer className="border-t py-8">
         <div className="container">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex items-center gap-2">
               <Icon name="Wrench" size={20} className="text-primary" />
-              <span className="font-semibold">РемонтМастер</span>
+              <span className="font-bold">РемонтМастер</span>
             </div>
+            
             <p className="text-sm text-muted-foreground">
-              © 2024 Все права защищены
+              © 2024 РемонтМастер. Все права защищены.
             </p>
+            
+            <div className="flex gap-4">
+              <Button variant="ghost" size="icon" asChild>
+                <a href="tel:+79991234567">
+                  <Icon name="Phone" size={20} />
+                </a>
+              </Button>
+              <Button variant="ghost" size="icon" asChild>
+                <a href="mailto:info@remont-master.ru">
+                  <Icon name="Mail" size={20} />
+                </a>
+              </Button>
+              <Button variant="ghost" size="icon" asChild>
+                <a href="https://wa.me/79991234567">
+                  <Icon name="MessageCircle" size={20} />
+                </a>
+              </Button>
+            </div>
           </div>
         </div>
       </footer>
